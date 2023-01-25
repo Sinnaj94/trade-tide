@@ -1,28 +1,26 @@
-# Create T3 App
-
+# Note
 This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
 
 ## What's next? How do I make an app with this?
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
-
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
-
+This is a simple flea market application using the T3 stack. The technologies used here are the following:
 - [Next.js](https://nextjs.org)
 - [NextAuth.js](https://next-auth.js.org)
 - [Prisma](https://prisma.io)
 - [Tailwind CSS](https://tailwindcss.com)
 - [tRPC](https://trpc.io)
 
-## Learn More
+## Prototyping
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+I did a quick prototyping using [excalidraw](https://excalidraw.com/) how the app should be looking. These are the results:
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+![./docs/](./docs/ui-design.png)
 
-## How do I deploy this?
+The template will be implemented using tailwind and designed properly.
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+## Installing
+Install the packages using the command `npm install`. After that, you should create the database schema using `npx prisma db push`. This creates an .sqlite-Database file you can work with. If you wish, you can install it to other Databases such as PostgreSQL.
+
+## Starting the application
+Start the application using `npm run dev`.
