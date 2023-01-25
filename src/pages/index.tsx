@@ -4,10 +4,10 @@ import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 import { api } from "../utils/api";
+import { Category } from "@prisma/client";
 
 const Home: NextPage = () => {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
-
+  const categories = api.category.getAll.useQuery();
   return (
     <>
       <Head>
@@ -16,43 +16,25 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <NavigationBar />
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
-        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
+      <main className="flex min-h-screen flex-col items-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
+        <div className="container flex flex-col justify-center gap-12 px-4 py-16 ">
           <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-            Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
+            Browse <span className="text-[hsl(280,100%,70%)]">categories</span>
           </h1>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-            <Link
-              className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-              href="https://create.t3.gg/en/usage/first-steps"
-              target="_blank"
-            >
-              <h3 className="text-2xl font-bold">First Steps →</h3>
-              <div className="text-lg">
-                Just the basics - Everything you need to know to set up your
-                database and authentication.
+          <section className="text-gray-400 bg-gray-900 body-font">
+            <div className="container px-5 py-24 mx-auto">
+              <div className="flex flex-wrap -m-4">
+                {categories.data?.map(category => (
+                  <CategoryTile key={category.id} category={category}></CategoryTile>
+                ))}
               </div>
-            </Link>
-            <Link
-              className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-              href="https://create.t3.gg/en/introduction"
-              target="_blank"
-            >
-              <h3 className="text-2xl font-bold">Documentation →</h3>
-              <div className="text-lg">
-                Learn more about Create T3 App, the libraries it uses, and how
-                to deploy it.
-              </div>
-            </Link>
-          </div>
-          <div className="flex flex-col items-center gap-2">
-            <p className="text-2xl text-white">
-              {hello.data ? hello.data.greeting : "Loading tRPC query..."}
-            </p>
-            <AuthShowcase />
-          </div>
-        </div>
-      </main>
+            </div>
+          </section>
+          <h1 className="text-xl tracking-tight text-white sm:text-[5rem]">
+            Newest <span className="text-[hsl(280,100%,70%)]">items</span>
+          </h1>
+        </div >
+      </main >
     </>
   );
 };
@@ -81,15 +63,31 @@ const NavigationBar: React.FC = () => {
             <button type="submit" className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
           </div>
         </form>
-        <li>
-          <a
-            href="#"
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            aria-current="page"
-          >{sessionData ? "Sign out" : "Sign in"}</a>
-        </li>
+        <a
+          href="#"
+          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          aria-current="page"
+        >{sessionData ? "Sign out" : "Sign in"}</a>
       </div>
     </nav>
+  )
+}
+
+const CategoryTile: React.FC<{ category: Category }> = ({ category }) => {
+  return (
+    <div className="p-4 lg:w-1/3">
+      <div className="h-full bg-gray-800 px-8 pt-16 pb-24 rounded-lg overflow-hidden text-center relative">
+        <h2 className="tracking-widest text-xs title-font font-medium text-gray-500 mb-1">CATEGORY</h2>
+        <h1 className="title-font sm:text-2xl text-xl font-medium text-white mb-3">{category.name}</h1>
+        <p className="leading-relaxed mb-3">Photo booth fam kinfolk cold-pressed sriracha leggings jianbing microdosing tousled waistcoat.</p>
+        <a className="text-indigo-400 inline-flex items-center">Learn More
+          <svg className="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14"></path>
+            <path d="M12 5l7 7-7 7"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
   )
 }
 
