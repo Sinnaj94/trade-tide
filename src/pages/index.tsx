@@ -4,10 +4,13 @@ import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 import { api } from "../utils/api";
-import { Category } from "@prisma/client";
+import type { Category } from "@prisma/client";
 
 const Home: NextPage = () => {
   const categories = api.category.getAll.useQuery();
+  const items = api.item.getMostRecent.useQuery();
+  console.log(items.data?.map((e) => e.ItemLinks.map((i) => i.link.url)))
+
   return (
     <>
       <Head>
@@ -31,8 +34,18 @@ const Home: NextPage = () => {
             </div>
           </section>
           <h1 className="text-xl tracking-tight text-white sm:text-[2rem]">
-            Newest <span className="text-[hsl(280,100%,70%)]">items</span>
+            Newest items
           </h1>
+          {items.data?.map(item => (
+            <>
+              <div id={item.id} className="text-white">
+                {item.title}
+              </div>
+              {item.ItemLinks.map(({ link }) => (
+                <img src={link.url} key={link.id} alt={link.title || item.title} className=""></img>
+              ))}
+            </>
+          ))}
         </div >
       </main >
     </>
@@ -88,6 +101,13 @@ const CategoryTile: React.FC<{ category: Category, className?: string }> = ({ ca
         </button>
       </div>
     </div>
+  )
+}
+
+
+const ItemTile: React.FC = () => {
+  return (
+    <div></div>
   )
 }
 
