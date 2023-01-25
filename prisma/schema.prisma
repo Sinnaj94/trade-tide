@@ -15,9 +15,10 @@ datasource db {
 }
 
 model Category {
-    id   String @id @default(cuid())
-    name String
-    Item Item[]
+    id          String @id @default(cuid())
+    name        String
+    Item        Item[]
+    description String
 }
 
 // Necessary for Next auth
