@@ -1,6 +1,9 @@
 # Note
 This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
 
+Screenshot:
+![./docs/](./docs/screenshot.png)
+
 ## What's next? How do I make an app with this?
 
 This is a simple flea market application using the T3 stack. The technologies used here are the following:
